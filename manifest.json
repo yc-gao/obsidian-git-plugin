@@ -1,0 +1,8 @@
+{
+    "id": "obsidian-git-plugin",
+    "name": "Git Plugin",
+    "version": "1.0.0",
+    "minAppVersion": "0.15.0",
+    "description": "A plugin to integrate Git version control into Obsidian.",
+    "isDesktopOnly": false
+}
