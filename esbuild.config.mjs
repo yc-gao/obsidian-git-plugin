@@ -7,7 +7,6 @@ const prod = (process.argv[2] === "production");
 const context = await esbuild.context({
     bundle: true,
     platform: "node",
-    format: "cjs",
     target: "es2018",
     logLevel: "info",
     sourcemap: prod ? false : "inline",
