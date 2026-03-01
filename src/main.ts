@@ -75,7 +75,6 @@ export default class GitPlugin extends Plugin {
 
     async syncGit(message: string = 'update') {
         try {
-            await this.execGitCommand('git pull --rebase');
             await this.execGitCommand(`git add ${this.settings.pathSpec}`);
             await this.execGitCommand(`git commit -m "${message}"`);
             await this.execGitCommand('git push');
