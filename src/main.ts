@@ -28,7 +28,12 @@ export default class GitPlugin extends Plugin {
         this.addCommand({
             id: 'git-commit',
             name: 'Git Commit',
-            callback: () => this.commitGit('update')
+            callback: () => this.commitGit()
+        });
+        this.addCommand({
+            id: 'git-sync',
+            name: 'Git Sync',
+            callback: () => this.syncGit()
         });
     }
 
@@ -39,9 +44,10 @@ export default class GitPlugin extends Plugin {
         await this.saveData(this.settings);
     }
 
-    async pullGit() {
+    async pullGit(rebase: boolean = false) {
         try {
-            await this.execGitCommand('git pull');
+            const command = rebase ? 'git pull --rebase' : 'git pull';
+            await this.execGitCommand(command);
             new Notice(`Pull successful`);
         } catch (error) {
             new Notice(`Git Pull Error: ${error.message}`);
@@ -57,13 +63,24 @@ export default class GitPlugin extends Plugin {
         }
     }
 
-    async commitGit(message: string) {
+    async commitGit(message: string = 'update') {
         try {
             await this.execGitCommand(`git add ${this.settings.pathSpec}`);
             await this.execGitCommand(`git commit -m "${message}"`);
             new Notice(`Commit successful`);
         } catch (error) {
             new Notice(`${error.message}`);
+        }
+    }
+
+    async syncGit(message: string = 'update') {
+        try {
+            await this.pullGit(true);
+            await this.commitGit(message);
+            await this.pushGit();
+            new Notice(`Sync successful`);
+        } catch (error) {
+            new Notice(`Git Sync Error: ${error.message}`);
         }
     }
 
