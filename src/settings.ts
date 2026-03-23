@@ -1,7 +1,5 @@
 import { PluginSettingTab, App, Setting } from 'obsidian';
 
-import GitPlugin from './main';
-
 export interface GitSettings {
     pathSpec: string;
 }
@@ -10,9 +8,9 @@ export const DEFAULT_SETTINGS: GitSettings = {
 };
 
 export class GitSettingsTab extends PluginSettingTab {
-    plugin: GitPlugin;
+    plugin: any;
 
-    constructor(app: App, plugin: GitPlugin) {
+    constructor(app: App, plugin: any) {
         super(app, plugin);
         this.plugin = plugin;
     }
