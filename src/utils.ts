@@ -12,17 +12,17 @@ export async function pullGit(path: string, rebase: boolean = false): Promise<vo
     await execCommand(command, { cwd: path });
 }
 
-export async function pushGit(path: string): Promise<void> {
-    await execCommand('git push', { cwd: path });
+export async function pushGit(path: string, force: boolean = false): Promise<void> {
+    const command = force ? 'git push -f' : 'git push'
+    await execCommand(command, { cwd: path });
 }
 
-export async function commitGit(path: string, message: string = 'update'): Promise<void> {
-    await execCommand(`git add .`, { cwd: path });
+export async function commitGit(path: string, pathSpec: string = '.', message: string = 'update'): Promise<void> {
+    await execCommand(`git add ${pathSpec}`, { cwd: path });
     await execCommand(`git commit -m "${message}"`, { cwd: path });
 }
 
-export async function syncGit(path: string, message: string = 'update'): Promise<void> {
-    await execCommand(`git add .`, { cwd: path });
-    await execCommand(`git commit -m "${message}"`, { cwd: path });
-    await execCommand('git push', { cwd: path });
+export async function syncGit(path: string, pathSpec: string = '.', message: string = 'update'): Promise<void> {
+    await commitGit(path, pathSpec, message)
+    await pushGit(path)
 }

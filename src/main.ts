@@ -35,7 +35,7 @@ export default class GitPlugin extends Plugin {
             id: 'git-commit',
             name: 'Git Commit',
             callback: () => {
-                commitGit(this.app.vault.adapter.getBasePath())
+                commitGit(this.app.vault.adapter.getBasePath(), this.settings.pathSpec)
                     .then(() => new Notice('Git Commit successful'))
                     .catch((error) => new Notice(`Git Commit failed: ${error.message}`))
             }
@@ -44,7 +44,7 @@ export default class GitPlugin extends Plugin {
             id: 'git-sync',
             name: 'Git Sync',
             callback: () => {
-                syncGit(this.app.vault.adapter.getBasePath())
+                syncGit(this.app.vault.adapter.getBasePath(), this.settings.pathSpec)
                     .then(() => new Notice('Git Sync successful'))
                     .catch((error) => new Notice(`Git Sync failed: ${error.message}`))
             }
