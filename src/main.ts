@@ -49,6 +49,12 @@ export default class GitPlugin extends Plugin {
                     .catch((error) => new Notice(`Git Sync failed: ${error.message}`))
             }
         });
+
+        this.addRibbonIcon('git-branch', 'Git Sync', ()=>{
+            syncGit(this.app.vault.adapter.getBasePath(), this.settings.pathSpec)
+                    .then(() => new Notice('Git Sync successful'))
+                    .catch((error) => new Notice(`Git Sync failed: ${error.message}`))
+        })
     }
 
     async loadSettings() {
